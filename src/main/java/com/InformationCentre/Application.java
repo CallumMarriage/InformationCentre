@@ -17,7 +17,6 @@ public class Application implements Controller {
 
     public Application(){
         network = new Network();
-
         lines = new Hashtable<>();
         lines.put("a", "Birmingham -- Dorridge -- Leamington Spa");
         lines.put("b", "Cross City Line");
@@ -40,7 +39,7 @@ public class Application implements Controller {
 
        application.generateNetwork(allStations);
 
-       TUI tui = new TUI(application);
+       new TUI(application);
 
     }
 

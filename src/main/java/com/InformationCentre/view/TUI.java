@@ -1,7 +1,9 @@
 /**
  * 
  */
-package com.InformationCentre.model;
+package com.InformationCentre.view;
+
+import com.InformationCentre.Controller;
 
 import java.util.Scanner;
 
@@ -14,7 +16,7 @@ import java.util.Scanner;
  */
 public class TUI {
 
-	private Controller controller;  
+	private Controller controller;
 	private Scanner stdIn;
 	
 	public TUI(Controller controller) {

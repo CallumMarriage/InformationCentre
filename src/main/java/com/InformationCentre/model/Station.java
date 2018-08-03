@@ -13,6 +13,8 @@ public class Station {
     private Boolean isFrom;
     private Boolean isTo;
     private Boolean visited;
+    private int lastUpdated;
+    private int distanceFromPrevious;
 
     public Station(String name){
         this.name = name;
@@ -20,6 +22,8 @@ public class Station {
         this.isFrom = false;
         this.isTo = false;
         this.visited = false;
+        this.lastUpdated = 0;
+        this.distanceFromPrevious = 0;
     }
 
     public void addConnection(Station station, Integer length){
@@ -61,5 +65,21 @@ public class Station {
 
     public void setVisited(Boolean visited) {
         this.visited = visited;
+    }
+
+    public int getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(int lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public int getDistanceFromPrevious() {
+        return distanceFromPrevious;
+    }
+
+    public void setDistanceFromPrevious(int distanceFromPrevious) {
+        this.distanceFromPrevious = distanceFromPrevious;
     }
 }

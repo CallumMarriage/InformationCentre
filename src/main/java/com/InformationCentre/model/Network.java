@@ -17,8 +17,8 @@ public class Network<T>{
     }
 
     public void addStationPair(String station1, String station2, String length){
-        station1 = station1.replace(" ", "");
-        station2 = station2.replace(" ", "");
+        station1 = station1.trim();
+        station2 = station2.trim();
         Station firstMatch = null;
         Station secondMatch = null;
 
@@ -83,66 +83,6 @@ public class Network<T>{
             stations.put(station1, newStation);
             stations.put(station2, newStationB);
         }
-    }
-
-    public Stack<Station> findRoute(String destination, Station source){
-        LinkedList<Station> next = new LinkedList();
-        Stack<Station> route = new Stack<>();
-        next.add(source);
-
-        while (!next.isEmpty()){
-
-            Station station = next.remove();
-
-            if(station.getName().equals(destination)){
-                return route;
-            }
-
-            if(!station.getVisited()) {
-                Boolean notVisited = true;
-                int i = 0;
-                while(notVisited) {
-                    if(i >= station.getConnections().size()){
-                        if(route.size() > 1){
-                            route.remove(station);
-                            Station parent = route.get(route.size() -1);
-                            if(parent.getName().equals(station.getName())){
-                                route.remove(parent);
-                                parent = route.get(route.size() -1);
-                            }
-                            next.add(parent);
-                            parent.setVisited(false);
-                            station.setVisited(true);
-                            notVisited = false;
-                        } else {
-                            return null;
-                        }
-                    } else {
-                        for(Connection connection : station.getConnections()){
-                            System.out.println(connection.station.getName());
-                        }
-                        Station nextStation = station.getConnections().get(i).station;
-                        if (!nextStation.getVisited()) {
-
-
-                            if(route.size() > 0) {
-                                if (route.peek().getName().equals(station.getName())) {
-                                    route.pop();
-                                }
-                            }
-                            route.add(station);
-                            station.setVisited(true);
-                            notVisited = false;
-                            next.add(nextStation);
-                        } else {
-                            i++;
-                        }
-                    }
-
-                }
-            }
-        }
-        return null;
     }
 
     public Hashtable<String, Station> getStations() {

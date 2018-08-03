@@ -1,10 +1,10 @@
 package com.InformationCentre;
 
 import com.InformationCentre.model.*;
-import com.InformationCentre.model.FileReader;
+import com.InformationCentre.util.*;
+import com.InformationCentre.view.TUI;
 
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -14,6 +14,7 @@ public class Application implements Controller {
 
     private Network network;
     private Hashtable<String, String> lines;
+    private int run;
 
     public Application(){
         network = new Network();
@@ -30,11 +31,13 @@ public class Application implements Controller {
         lines.put("j", "Birmingham -- Stratford-upon-Avon");
         lines.put("k", "Bimingham -- Wolverhampton -- Telford -- Shrewsbury");
         lines.put("l", "Birmingham -- Worcester -- Hereford");
+        this.run = 0;
 
     }
 
     public static void main(String[] args){
-       List<String> allStations = FileReader.readCSVFileToStringArray(new File("./src/main/resources/routes/WestMidlandsRailway.csv"));
+
+       List<String> allStations = com.InformationCentre.util.FileReader.readCSVFileToStringArray(new File("./src/main/resources/routes/WestMidlandsRailway.csv"));
        Application application = new Application();
 
        application.generateNetwork(allStations);
@@ -66,18 +69,24 @@ public class Application implements Controller {
     @Override
     public String listStationsInLine(String line) {
         StringBuilder sb = new StringBuilder();
-        // Loop through each line, for each line list all of the stations on that line.
-        // this is O(s(The number of stations at each line))
 
-        if (lines.get(line)!= null) {
-            if(network.getTrainLines().get(lines.get(line)) != null) {
-                TrainLine trainLine = (TrainLine) network.getTrainLines().get(lines.get(line));
-                for (Station station : trainLine.getStations()) {
-                    sb.append(station.getName());
-                    sb.append(", ");
-                }
-                return sb.toString();
-            }
+        run++;
+        RouteFinder routeFinder = new RouteFinder();
+
+        if(network.getTrainLines().get(lines.get(line)) != null) {
+            TrainLine trainLine = (TrainLine) network.getTrainLines().get(lines.get(line));
+
+            ArrayList<Station> stations = (ArrayList<Station>) trainLine.getStations();
+
+            routeFinder.findRoute(stations.get(0), stations.get(stations.size() - 1), run);
+
+            sb.append("Duration: ");
+            sb.append(routeFinder.getDuration());
+            sb.append("\n");
+
+            sb.append(trainLine.getAllStationsAsString());
+
+            return sb.toString();
         }
         return "Line is not valid";
     }
@@ -85,14 +94,20 @@ public class Application implements Controller {
     @Override
     public String showPathBetween(String stationA, String stationB) {
 
-        if(stationA.equals("") || stationB.equals("")){
-            return "boi";
+        run++;
+
+        if(network.getStations().get(stationA) == null || network.getStations().get(stationB) == null) {
+            return "Station does not exist";
         }
+        RouteFinder routeFinder = new RouteFinder();
         // This is O(n(Number of stations in the network)c(Number of Connections at each station))
-        Stack<Station> routes = network.findRoute(stationB,(Station) network.getStations().get(stationA));
+        Stack<Station> routes = routeFinder.findRoute((Station) network.getStations().get(stationB),(Station) network.getStations().get(stationA), run);
         if(routes == null){
             return "No route";
         }
+
+        System.out.println("Duration : " + routeFinder.getDuration() + " mins.");
+
         StringBuilder sb = new StringBuilder();
         // This is O(n(Number of stations on the route)
         for(Station station : routes){

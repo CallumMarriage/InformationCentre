@@ -1,4 +1,4 @@
-package com.InformationCentre.model;
+package com.InformationCentre.util;
 
 import java.io.BufferedReader;
 import java.io.File;

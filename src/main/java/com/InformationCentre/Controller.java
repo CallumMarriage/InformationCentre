@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.InformationCentre.model;
+package com.InformationCentre;
 
 /**
  * A controller for the West Midlands Railway Information Centre system.

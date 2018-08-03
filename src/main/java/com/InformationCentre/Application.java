@@ -8,6 +8,14 @@ import java.io.*;
 import java.util.*;
 
 /**
+ * Main class used to trigger the TUI and to communicate with the TUI.
+ * I have mapped the network into two structures, both of which are Graphs, the first being a HashTable of TrainLines, the second being A HashTable of Stations.
+ * Every TrainLine contains a collection of Stations (Nodes) all of which are connected to each other using a connection (Edge).
+ * Every Station (Node in the Hash Table is connected to each other station as defined in the CSV using a Connection (Edge).
+ *
+ * The reason I split the structures into 2 is because it is more time efficient to find every element in a trainline if it is in its own structure.
+ * It also means that when you want to use the Find Route method on TrainLine, the scope is fixed to just stations on that line.
+ *
  * @author callummarriage
  */
 public class Application implements Controller {
@@ -46,6 +54,11 @@ public class Application implements Controller {
 
     }
 
+    /**
+     * Generates the Network, populates the Train Line Hash Table as well as the Stations Hashtable.
+     *
+     * @param allStations every line in the csv
+     */
     public void generateNetwork(List<String> allStations){
         for(String stationPair : allStations){
             String[] stationPairSplit = stationPair.split(",");

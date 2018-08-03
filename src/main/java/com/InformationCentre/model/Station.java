@@ -4,15 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Model for a station (Node)
+ *
  * @author callummarriage
  */
 public class Station {
 
     private List<Connection> connectedStations;
     private String name;
+    //This is required to show if the station is a source Station (On the left hand side of the csv)
     private Boolean isFrom;
+    //This is required to show if the station is a destination Station (On the right hand side of the csv)
     private Boolean isTo;
+    //I use the boolean for visited as it is more efficient than to you a stack of all the visited stations.
     private Boolean visited;
+    //The last updated field shows which run this station was last edited on, this is because of the state problems caused by using a boolean for visited instead of using a stack
     private int lastUpdated;
     private int distanceFromPrevious;
 

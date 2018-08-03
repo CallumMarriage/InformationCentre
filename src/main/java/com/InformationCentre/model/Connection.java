@@ -1,6 +1,8 @@
 package com.InformationCentre.model;
 
 /**
+ * Model for a connection (Edge)
+ *
  * @author callummarriage
  */
 public class Connection {

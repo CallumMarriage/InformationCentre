@@ -3,6 +3,8 @@ package com.InformationCentre.model;
 import java.util.*;
 
 /**
+ * Model for a network
+ *
  * @author callummarriage
  */
 public class Network<T>{
@@ -30,6 +32,7 @@ public class Network<T>{
         }
 
         if(firstMatch != null){
+            // Checks to see if this connection already exists
             for(Connection connection : firstMatch.getConnections()){
                 if(connection.station.getName().equals(station2)){
                     return;
@@ -59,6 +62,7 @@ public class Network<T>{
             }
         }
         if(secondMatch != null){
+            // Checks to see if this connection already exists
             for(Connection connection : secondMatch.getConnections()){
                 if(connection.station.getName().equals(station1)){
                     return;

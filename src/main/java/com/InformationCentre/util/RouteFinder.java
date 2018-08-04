@@ -6,7 +6,8 @@ import com.InformationCentre.model.Station;
 import java.util.Stack;
 
 /**
- * Utility for finding the route between two stations, this class should be static but having to return both the duration and the Route means that it needs to have state.
+ * Utility for finding the route between two stations.
+ * This class should be static but having to return both the duration and the Route means that it needs to have state.
  * An alternative would be to loop through the stack in the Application class but that would add additional time onto the process.
  *
  * @author callummarriage
@@ -24,7 +25,7 @@ public class RouteFinder {
      * @param destination
      * @param source
      * @param run
-     * @return
+     * @return a route between the source and the destination
      */
     public Stack<Station> findRoute(Station destination, Station source, Integer run){
 
